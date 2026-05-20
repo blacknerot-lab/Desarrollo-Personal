@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Desarrollo Personal</title>
+  <link rel="stylesheet" href="css\style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <div class="brand">
+        <div class="brand-icon"><i class="ti ti-leaf"></i></div>
+        <div class="brand-text">
+          <span class="brand-name">Crecer</span>
+          <span class="brand-sub">desarrollo personal</span>
+        </div>
+      </div>
+      <button class="sidebar-toggle" id="sidebarToggle" title="Colapsar menú">
+        <i class="ti ti-layout-sidebar-left-collapse"></i>
+      </button>
+    </div>
+
+    <nav class="nav">
+      <button class="nav-item active" data-tab="horario">
+        <i class="ti ti-calendar-time"></i>
+        <span>Horario</span>
+      </button>
+      <button class="nav-item" data-tab="habitos">
+        <i class="ti ti-checkbox"></i>
+        <span>Hábitos</span>
+      </button>
+      <button class="nav-item" data-tab="resumen">
+        <i class="ti ti-chart-bar"></i>
+        <span>Resumen</span>
+      </button>
+      <button class="nav-item" data-tab="historial">
+        <i class="ti ti-history"></i>
+        <span>Historial</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="storage-info" id="storageInfo">
+        <i class="ti ti-database"></i>
+        <span>Datos guardados</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="main">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title" id="pageTitle">Actividades diarias</h1>
+        <div class="breadcrumb" id="breadcrumb">Planifica tu día hora a hora</div>
+      </div>
+      <div class="topbar-right">
+        <div class="save-indicator" id="saveIndicator">
+          <i class="ti ti-check"></i> Guardado
+        </div>
+        <div class="current-time" id="currentTime"></div>
+      </div>
+    </header>
+
+    <!-- ========== TAB: HORARIO ========== -->
+    <section class="tab-content active" id="tab-horario">
+      <div class="schedule-controls">
+        <div class="date-nav">
+          <button class="icon-btn" id="prevDay" title="Día anterior"><i class="ti ti-chevron-left"></i></button>
+          <div class="date-display">
+            <input type="date" id="dateInput" />
+            <div class="date-label" id="dateLabel"></div>
+          </div>
+          <button class="icon-btn" id="nextDay" title="Día siguiente"><i class="ti ti-chevron-right"></i></button>
+          <button class="icon-btn today-btn" id="todayBtn" title="Ir a hoy">Hoy</button>
+        </div>
+        <div class="day-stats">
+          <div class="day-stat">
+            <span class="day-stat-num" id="statPlanned">0</span>
+            <span class="day-stat-label">planificadas</span>
+          </div>
+          <div class="day-stat">
+            <span class="day-stat-num green" id="statDone">0</span>
+            <span class="day-stat-label">completadas</span>
+          </div>
+          <div class="day-stat">
+            <div class="mini-ring" id="miniRing">
+              <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="var(--border)" stroke-width="3"/><circle id="ringArc" cx="18" cy="18" r="15" fill="none" stroke="var(--accent)" stroke-width="3" stroke-dasharray="0 94.2" stroke-linecap="round" transform="rotate(-90 18 18)"/></svg>
+              <span id="ringPct">0%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="schedule-grid-wrap">
+        <div class="schedule-grid" id="scheduleGrid"></div>
+      </div>
+    </section>
+
+    <!-- ========== TAB: HÁBITOS ========== -->
+    <section class="tab-content" id="tab-habitos">
+      <div class="habits-header">
+        <div class="add-habit-form" id="addHabitForm">
+          <button class="emoji-btn" id="emojiBtn" title="Cambiar emoji">⭐</button>
+          <input type="text" id="habitNameInput" placeholder="Nombre del hábito..." maxlength="40" />
+          <select id="habitColorSelect">
+            <option value="green">🟢 Verde</option>
+            <option value="blue">🔵 Azul</option>
+            <option value="amber">🟡 Amarillo</option>
+            <option value="coral">🔴 Coral</option>
+            <option value="purple">🟣 Morado</option>
+          </select>
+          <button class="btn-primary" id="addHabitBtn"><i class="ti ti-plus"></i> Agregar hábito</button>
+        </div>
+      </div>
+
+      <div class="week-selector">
+        <button class="icon-btn" id="prevWeek"><i class="ti ti-chevron-left"></i></button>
+        <span class="week-range" id="weekRange"></span>
+        <button class="icon-btn" id="nextWeek"><i class="ti ti-chevron-right"></i></button>
+        <button class="icon-btn today-btn" id="thisWeekBtn">Esta semana</button>
+      </div>
+
+      <div class="habits-table-wrap">
+        <table class="habits-table" id="habitsTable">
+          <thead id="habitsHead"></thead>
+          <tbody id="habitsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========== TAB: RESUMEN ========== -->
+    <section class="tab-content" id="tab-resumen">
+      <div class="summary-grid">
+        <div class="summary-card big-card">
+          <div class="card-label">Progreso esta semana</div>
+          <div class="big-ring-wrap">
+            <svg class="big-ring" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="var(--border)" stroke-width="8"/>
+              <circle id="bigRingArc" cx="60" cy="60" r="50" fill="none" stroke="var(--accent)" stroke-width="8"
+                stroke-dasharray="0 314" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+            </svg>
+            <div class="big-ring-text">
+              <span class="big-pct" id="weekPct">0%</span>
+              <span class="big-sub">completado</span>
+            </div>
+          </div>
+        </div>
+        <div class="stats-col">
+          <div class="stat-box" id="sb-total"></div>
+          <div class="stat-box" id="sb-done"></div>
+          <div class="stat-box" id="sb-habits"></div>
+          <div class="stat-box" id="sb-streak"></div>
+        </div>
+      </div>
+
+      <div class="section-title">Actividad últimos 14 días</div>
+      <div class="heatmap-wrap" id="heatmap"></div>
+
+      <div class="section-title">Hábitos — semana actual</div>
+      <div class="habits-summary" id="habitsSummary"></div>
+    </section>
+
+    <!-- ========== TAB: HISTORIAL ========== -->
+    <section class="tab-content" id="tab-historial">
+      <div class="historial-controls">
+        <input type="month" id="monthPicker" />
+        <button class="btn-primary" id="exportBtn"><i class="ti ti-download"></i> Exportar CSV</button>
+      </div>
+      <div class="historial-list" id="historialList"></div>
+    </section>
+
+  </main>
+
+  <!-- MODAL DETALLE HORA -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-hour" id="modalHour"></div>
+          <div class="modal-date" id="modalDate"></div>
+        </div>
+        <button class="modal-close" id="modalClose"><i class="ti ti-x"></i></button>
+      </div>
+      <div class="modal-body">
+        <label class="field-label">Actividad</label>
+        <input type="text" id="modalActivity" class="modal-input" placeholder="¿Qué harás en esta hora?" maxlength="80" />
+        <label class="field-label">Estado</label>
+        <div class="status-pills" id="statusPills"></div>
+        <label class="field-label">Notas</label>
+        <textarea id="modalNotes" class="modal-textarea" placeholder="Reflexiones, detalles, ideas..." rows="4"></textarea>
+        <label class="field-label">Energía</label>
+        <div class="energy-row">
+          <input type="range" id="modalEnergy" min="1" max="5" value="3" />
+          <span class="energy-label" id="energyLabel">⚡⚡⚡</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" id="modalCancel">Cancelar</button>
+        <button class="btn-primary" id="modalSave"><i class="ti ti-device-floppy"></i> Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js\script.js"></script>
+</body>
+</html>
